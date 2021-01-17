@@ -1,3 +1,7 @@
+:root {
+  --primary-dark: #2f2f2f;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,19 +10,39 @@
 
 .App {
   display: flex;
-  flex-direction: column;
   height: 100vh;
+  flex-direction: column;
   background-color: #fafafa;
 }
 
-.header, .cards-container {
+.header,
+.cards-container,
+.cards-container-inner {
   display: flex;
 }
 
 .header {
+  height: 50px;
   background-color: #fff;
+  justify-content: center;
+  align-items: center;
+}
+
+.inner-header {
+  height: 100%;
+}
+
+.inner-header h1 {
+  color: var(--primary-dark);
 }
 
 .cards-container {
   flex: 1;
+  justify-content: center;
+}
+
+.cards-container-inner {
+  position: relative;
+  margin-top: 20px;
+  /* background-color: lavender; */
 }
