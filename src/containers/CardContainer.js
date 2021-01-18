@@ -1,12 +1,16 @@
 import React from "react"
 
 import Card from "../components/Card/Card"
-import DATA from "../data/data"
 import dimensions from "../styles/dimensions"
 
 const CardContainer = props => {
-  const cards = DATA.slice(0, dimensions.totle_cards).map((card, index) => (
-    <Card key={card.id} index={index} {...card} />
+  const cards = props.cards.map((card, index) => (
+    <Card
+      key={card.id + index}
+      clicked={props.clicked(card)}
+      animationEnd={props.animationEnd}
+      {...card}
+    />
   ))
 
   return (

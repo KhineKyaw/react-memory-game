@@ -16,6 +16,7 @@ const Card = props => {
 
   return (
     <div
+      onClick={props.clicked}
       className={classes.card}
       style={{
         width: dimensions.card_size,
@@ -23,7 +24,11 @@ const Card = props => {
         left: leftPos,
         top: topPos
       }}>
-      <img src={props.src} alt={props.title}></img>
+      <img
+        onAnimationEnd={props.animationEnd}
+        className={!props.show ? classes.hide_image : classes.show_image}
+        src={props.src}
+        alt={props.title}></img>
     </div>
   )
 }
