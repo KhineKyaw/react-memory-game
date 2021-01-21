@@ -1,7 +1,9 @@
-const card_size = 120
-const card_margin = 20
+const card_size = 110
+const card_margin = 16
+
+// Note: use even numbers to get symmetric grid.
 const number_of_row = 4
-const number_of_col = 6
+const number_of_col = 4
 
 const dimensions = {
   card_size: card_size,

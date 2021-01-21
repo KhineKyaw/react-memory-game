@@ -1,8 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600&display=swap");
+
 :root {
+  --primary: #9900ff;
   --primary-dark: #2f2f2f;
+  --primary-background: #eee3ff;
+  --primary-text: #2f0264;
+  --primary-background-card: #dbc5fd;
 }
 
 * {
+  font-family: "Quicksand", sans-serif;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -12,28 +19,52 @@
   display: flex;
   height: 100vh;
   flex-direction: column;
-  background-color: #fafafa;
+  background-color: var(--primary-background);
 }
 
 .header,
+.inner-header,
 .cards-container,
-.cards-container-inner {
+.cards-container-inner,
+.tool-bar {
   display: flex;
 }
 
 .header {
-  height: 50px;
-  background-color: #fff;
+  height: 90px;
+  background-color: transparent;
   justify-content: center;
   align-items: center;
 }
 
 .inner-header {
   height: 100%;
+  flex-direction: column;
+  /* background-color: royalblue; */
+  padding: 0 10px;
+  align-items: center;
+}
+
+.tool-bar {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.tool-bar span {
+  display: flex;
+  flex: 1;
+}
+
+.tool-bar span:nth-child(2) {
+  justify-content: center;
+}
+.tool-bar span:nth-child(3) {
+  justify-content: flex-end;
+  cursor: pointer;
 }
 
 .inner-header h1 {
-  color: var(--primary-dark);
+  margin-top: 10px;
 }
 
 .cards-container {
@@ -45,4 +76,67 @@
   position: relative;
   margin-top: 20px;
   /* background-color: lavender; */
+}
+
+/* Modal */
+
+.modal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #0e0d1f2a;
+  z-index: 999;
+  animation-name: modal-animation-fade-in;
+  animation-delay: 300ms;
+  animation-duration: 600ms;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+.my-modal {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  width: 260px;
+  height: 200px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.modal-reset-btn {
+  display: flex;
+  cursor: pointer;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary);
+}
+
+.modal-reset-btn .icon {
+  color: #fff;
+  width: 46%;
+  height: 46%;
+}
+
+@keyframes modal-animation-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes modal-animation-fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

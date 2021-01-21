@@ -301,4 +301,7 @@ const DATA = [
   }
 ]
 
+export const backgroundUrl =
+  "https://raw.githubusercontent.com/KhineKyaw/react-memory-game/main/assets/images/background/diamond.svg"
+
 export default DATA

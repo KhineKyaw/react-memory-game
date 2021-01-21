@@ -1,30 +1,100 @@
-.card {
-  position: absolute;
-  background-color: #fff;
-  box-shadow: 0px 2px 3px #00000036;
-  border-radius: 5px;
-  padding: 20px;
+:root {
+  --card-animation-duration: 580ms;
 }
 
-.card img {
+.card {
+  position: absolute;
+  background-color: transparent;
+  /* box-shadow: 0px 2px 3px #00000036;
+  border-radius: 5px; */
+  /* overflow: hidden; */
+  perspective: 900px;
+  cursor: pointer;
+}
+
+.card_inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0px 2px 5px #00000038;
+  border-radius: 5px;
+  transform-style: preserve-3d;
+  background-color: var(--primary-background-card);
+  /* transform: rotateY(120deg); */
+}
+
+.card_font_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}
+
+.card_back_div {
+  background-color: #ffffffd2;
+  border-radius: 5px;
+  padding: 20px;
+  transform: rotateY(180deg);
+}
+
+.card_back_div div {
   width: 100%;
   height: 100%;
 }
 
+.card_font_div,
+.card_back_div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+.card_img {
+  width: 100%;
+  height: 100%;
+}
+
+.card_bg_icon {
+  width: 40%;
+  height: 40%;
+  color: var(--primary-text);
+}
+
 .hide_image {
-  opacity: 0.2;
+  opacity: 1;
   animation-name: hide_image_animation;
-  animation-duration: 1.6s;
+  animation-duration: var(--card-animation-duration);
+  animation-fill-mode: forwards;
+  animation-timing-function: steps(1, end);
 }
 
 .show_image {
   animation-name: show_image_animation;
-  animation-duration: 1.6s;
+  animation-duration: var(--card-animation-duration);
+  animation-fill-mode: forwards;
+  animation-timing-function: steps(1, end);
+}
+
+.flip_animation_class {
+  animation-name: rotate_Y;
+  animation-duration: var(--card-animation-duration);
+  animation-fill-mode: forwards;
+}
+
+.flip_animation_class_r {
+  animation-name: rotate_YR;
+  animation-duration: var(--card-animation-duration);
+  animation-delay: 300ms;
+  animation-fill-mode: backwards;
 }
 
 @keyframes show_image_animation {
   0% {
-    opacity: 0;
+  }
+  50% {
+    opacity: 1;
   }
   100% {
     opacity: 1;
@@ -33,9 +103,31 @@
 
 @keyframes hide_image_animation {
   0% {
+  }
+  50% {
     opacity: 1;
   }
   100% {
-    opacity: 0.2;
+    opacity: 0;
+  }
+}
+
+@keyframes rotate_Y {
+  0% {
+    transform: rotateY(0deg);
+  }
+
+  100% {
+    transform: rotateY(180deg);
+  }
+}
+
+@keyframes rotate_YR {
+  0% {
+    transform: rotateY(180deg);
+  }
+
+  100% {
+    transform: rotateY(0deg);
   }
 }
