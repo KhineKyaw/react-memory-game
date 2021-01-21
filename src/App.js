@@ -6,13 +6,26 @@ import CardContainer from "./containers/CardContainer"
 import ModalContainer from "./containers/ModalContainer"
 import getShuffledCards from "./utils/getShuffledCards"
 
+const timeStep = 1000
+
 class App extends Component {
   state = {
     cards: getShuffledCards(),
     card_pair: [],
     flipped: 0,
-    duration: 0,
-    win: true
+    duration: 1220,
+    win: false,
+    timer: null
+  }
+
+  componentDidMount() {
+    this.setState({
+      timer: setInterval(this.timeIncrement, timeStep)
+    })
+  }
+
+  timeIncrement = () => {
+    this.setState(state => ({ duration: state.duration + timeStep }))
   }
 
   flippedIncrement = () => {
@@ -21,14 +34,15 @@ class App extends Component {
 
   updateCardPair = card => {
     this.setState(state => ({
-      card_pair: [...state.card_pair, { ...card, animationFinished: false }]
+      card_pair: [...state.card_pair, card.index]
     }))
   }
 
   showCard = theCard => {
     this.setState(state => ({
       cards: state.cards.map((card, index) => {
-        if (index === theCard.index) return { ...card, show: true }
+        if (index === theCard.index)
+          return { ...card, show: true, animationFinished: false }
         else return card
       })
     }))
@@ -37,10 +51,7 @@ class App extends Component {
   clearShowCardPair = () => {
     this.setState(state => ({
       cards: state.cards.map((card, index) => {
-        if (
-          index === state.card_pair[0].index ||
-          index === state.card_pair[1].index
-        ) {
+        if (index === state.card_pair[0] || index === state.card_pair[1]) {
           return { ...card, show: false }
         } else return card
       }),
@@ -59,18 +70,7 @@ class App extends Component {
     return true
   }
 
-  cpAnimationFinishedHandler = theCard => () => {
-    this.setState(state => ({
-      card_pair: state.card_pair.map(card => {
-        if (card.index === theCard.index)
-          return { ...card, animationFinished: true }
-        else return card
-      })
-    }))
-  }
-
   cardAnimationFinishedHandler = theCard => () => {
-    console.log("cardAni: ", theCard)
     this.setState(state => ({
       cards: state.cards.map(card => {
         if (card.index === theCard.index)
@@ -82,18 +82,19 @@ class App extends Component {
 
   selectionFinishedHandler = () => {
     // console.log("Finished")
-    const { card_pair } = this.state
+    const { cards, card_pair } = this.state
     if (
       card_pair.length < 2 ||
-      !card_pair[0].animationFinished ||
-      !card_pair[1].animationFinished
+      !cards[card_pair[0]].animationFinished ||
+      !cards[card_pair[1]].animationFinished
     )
       return
     // console.log("Checking same!")
 
-    if (card_pair[0].id === card_pair[1].id) {
+    if (cards[card_pair[0]].id === cards[card_pair[1]].id) {
       // console.log("SAME: do something")
       this.setState({ card_pair: [] })
+      this.setWinGame()
     } else {
       this.clearShowCardPair()
     }
@@ -110,13 +111,15 @@ class App extends Component {
   }
 
   gameResetHandler = () => {
+    clearInterval(this.state.timer)
     this.clearShowCardsHandler()
     this.setState({
       // cards: getShuffledCards(),
       card_pair: [],
       flipped: 0,
       duration: 0,
-      win: false
+      win: false,
+      timer: setInterval(this.timeIncrement, timeStep)
     })
   }
 
@@ -125,11 +128,10 @@ class App extends Component {
     return this.state.cards.reduce((prev, now) => prev && now.show, true)
   }
 
-  winningGameHandler = () => {
-    console.log("Win checked!")
+  setWinGame = () => {
     const win = this.isAllCardsFlipped()
     this.setState({ win })
-    return win
+    if (win) clearInterval(this.state.timer)
   }
 
   render() {
@@ -146,13 +148,15 @@ class App extends Component {
           card_pair={this.state.card_pair}
           flipped={this.state.flipped}
           clicked={this.cardOnClickedHandler}
-          cpAnimationEnd={this.cpAnimationFinishedHandler}
           cardAnimationEnd={this.cardAnimationFinishedHandler}
           selectionEnd={this.selectionFinishedHandler}
-          gameWin={this.winningGameHandler}
         />
         {this.state.win ? (
-          <ModalContainer reset={this.gameResetHandler} />
+          <ModalContainer
+            flipped={this.state.flipped}
+            duration={this.state.duration}
+            reset={this.gameResetHandler}
+          />
         ) : null}
       </div>
     )

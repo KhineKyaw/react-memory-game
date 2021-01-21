@@ -31,6 +31,7 @@
 }
 
 .header {
+  color: var(--primary-text);
   height: 90px;
   background-color: transparent;
   justify-content: center;
@@ -47,7 +48,7 @@
 
 .tool-bar {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 16px;
 }
 
 .tool-bar span {
@@ -57,10 +58,34 @@
 
 .tool-bar span:nth-child(2) {
   justify-content: center;
+  align-items: center;
 }
 .tool-bar span:nth-child(3) {
   justify-content: flex-end;
+  align-items: center;
+}
+
+.duration-text {
+  display: flex;
+  position: relative;
+  flex: 1;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.duration-text p {
+  margin-left: 5px;
+}
+
+.my-icon {
   cursor: pointer;
+  color: var(--primary);
+}
+
+.clock-icon {
+  height: 18px;
+  width: 18px;
+  margin-left: 24%;
 }
 
 .inner-header h1 {
@@ -97,14 +122,22 @@
 }
 
 .my-modal {
+  color: var(--primary-text);
   display: flex;
   flex-direction: column;
-  background-color: #fff;
-  width: 260px;
-  height: 200px;
+  background-color: #ffffffec;
+  width: 360px;
+  height: 280px;
   border-radius: 10px;
   align-items: center;
   justify-content: space-around;
+  padding: 18px;
+}
+
+.modal-span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-reset-btn {
@@ -116,6 +149,11 @@
   justify-content: center;
   align-items: center;
   background-color: var(--primary);
+}
+
+.modal-reset-btn:hover {
+  transform: scale(1.1);
+  transition: 200ms;
 }
 
 .modal-reset-btn .icon {

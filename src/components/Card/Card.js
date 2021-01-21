@@ -40,10 +40,6 @@ const Card = props => {
     </div>
   )
 
-  useEffect(() => {
-    console.log("[Card]: useEffect")
-  })
-
   return (
     <div
       onAnimationEnd={props.cardAnimationEnd}
